@@ -1,0 +1,2785 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAMEHUB - МАРКЕТПЛЕЙС LOCALSTORAGE</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #0f0f12;
+            color: #fff;
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #6e00ff 0%, #ff00e6 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, #ff00e6, #6e00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(110, 0, 255, 0.3);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+            position: relative;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            padding: 0.5rem 0;
+        }
+        
+        nav ul li a:hover {
+            color: #ffcc00;
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: 0;
+            left: 0;
+            background-color: #ffcc00;
+            transition: width 0.3s;
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        
+        .auth-buttons button {
+            background: linear-gradient(90deg, #ff00e6, #6e00ff);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-left: 1rem;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(110, 0, 255, 0.4);
+        }
+        
+        .auth-buttons button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(110, 0, 255, 0.6);
+        }
+        
+        .hero {
+            background: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center;
+            background-size: cover;
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(110, 0, 255, 0.7) 0%, rgba(255, 0, 230, 0.7) 100%);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(90deg, #ffcc00, #ff00e6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero p {
+            font-size: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto 2.5rem;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(90deg, #ff00e6, #6e00ff);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(110, 0, 255, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1.1rem;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(110, 0, 255, 0.6);
+            color: white;
+        }
+        
+        .how-it-works {
+            padding: 5rem 0;
+            background-color: #1a1a24;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .how-it-works::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1511512578047-dfb367046420?ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80') no-repeat center center;
+            background-size: cover;
+            opacity: 0.1;
+            z-index: 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(90deg, #ffcc00, #ff00e6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .step {
+            flex: 1;
+            min-width: 250px;
+            background: rgba(30, 30, 40, 0.8);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .step:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+        
+        .step h3 {
+            color: #ffcc00;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .step h3::before {
+            content: '';
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, #6e00ff 0%, #ff00e6 100%);
+            border-radius: 50%;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .step:nth-child(1) h3::before {
+            content: '1';
+        }
+        
+        .step:nth-child(2) h3::before {
+            content: '2';
+        }
+        
+        .step:nth-child(3) h3::before {
+            content: '3';
+        }
+        
+        .step:nth-child(4) h3::before {
+            content: '4';
+        }
+        
+        .step p {
+            color: #ccc;
+            font-size: 1.1rem;
+        }
+        
+        .products {
+            padding: 5rem 0;
+            background-color: #0f0f12;
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .product-card {
+            background: #1a1a24;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(110, 0, 255, 0.4);
+        }
+        
+        .product-image {
+            height: 200px;
+            background-color: #333;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .product-image::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: linear-gradient(to top, rgba(26, 26, 36, 0.9), transparent);
+        }
+        
+        .product-info {
+            padding: 1.5rem;
+        }
+        
+        .product-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffcc00;
+            margin-bottom: 1rem;
+        }
+        
+        .product-description {
+            color: #aaa;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+        
+        .product-seller {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .seller-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #333;
+            margin-right: 0.8rem;
+            background: linear-gradient(135deg, #6e00ff 0%, #ff00e6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .seller-name {
+            font-size: 0.95rem;
+            color: #ddd;
+        }
+        
+        .product-rating {
+            color: #ffcc00;
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .buy-btn {
+            display: block;
+            width: 100%;
+            background: linear-gradient(90deg, #ff00e6, #6e00ff);
+            color: white;
+            border: none;
+            padding: 0.9rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+        
+        .buy-btn:hover {
+            background: linear-gradient(90deg, #6e00ff, #ff00e6);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(110, 0, 255, 0.4);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-content {
+            background: #1a1a24;
+            padding: 2.5rem;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: modalAppear 0.4s ease-out;
+        }
+        
+        @keyframes modalAppear {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .modal-title {
+            margin-bottom: 2rem;
+            color: white;
+            font-size: 1.8rem;
+            text-align: center;
+            background: linear-gradient(90deg, #ffcc00, #ff00e6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .form-group {
+            margin-bottom: 1.8rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-weight: bold;
+            color: #ddd;
+        }
+        
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(30, 30, 40, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            font-size: 1rem;
+            color: white;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            border-color: #6e00ff;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(110, 0, 255, 0.3);
+        }
+        
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .close-modal {
+            background: #333;
+        }
+        
+        .close-modal:hover {
+            background: #444;
+        }
+        
+        .profile {
+            padding: 5rem 0;
+            background-color: #1a1a24;
+            display: none;
+        }
+        
+        .profile.active {
+            display: block;
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 3rem;
+            background: rgba(30, 30, 40, 0.8);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6e00ff 0%, #ff00e6 100%);
+            margin-right: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            font-weight: bold;
+            box-shadow: 0 5px 20px rgba(110, 0, 255, 0.5);
+        }
+        
+        .profile-info h2 {
+            color: white;
+            margin-bottom: 0.8rem;
+            font-size: 2rem;
+            background: linear-gradient(90deg, #ffcc00, #ff00e6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .profile-rating {
+            color: #ffcc00;
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .profile-bio {
+            color: #aaa;
+            max-width: 600px;
+            font-size: 1.1rem;
+        }
+        
+        .profile-products {
+            margin-top: 3rem;
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 2.5rem;
+        }
+        
+        .tab {
+            padding: 1rem 2rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            color: #aaa;
+            font-weight: bold;
+        }
+        
+        .tab.active {
+            border-bottom-color: #6e00ff;
+            color: white;
+            background: linear-gradient(to top, rgba(110, 0, 255, 0.1), transparent);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .order {
+            background: rgba(30, 30, 40, 0.8);
+            padding: 1.8rem;
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .order-id {
+            color: #6e00ff;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .order-status {
+            padding: 0.5rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+        
+        .status-pending {
+            background: rgba(243, 156, 18, 0.2);
+            color: #f39c12;
+            border: 1px solid #f39c12;
+        }
+        
+        .status-completed {
+            background: rgba(46, 204, 113, 0.2);
+            color: #2ecc71;
+            border: 1px solid #2ecc71;
+        }
+        
+        .status-cancelled {
+            background: rgba(231, 76, 60, 0.2);
+            color: #e74c3c;
+            border: 1px solid #e74c3c;
+        }
+        
+        .status-support {
+            background: rgba(52, 152, 219, 0.2);
+            color: #3498db;
+            border: 1px solid #3498db;
+        }
+        
+        .order-product {
+            display: flex;
+            margin-bottom: 1.5rem;
+        }
+        
+        .order-product-image {
+            width: 100px;
+            height: 100px;
+            background-color: #333;
+            background-size: cover;
+            background-position: center;
+            margin-right: 1.5rem;
+            border-radius: 8px;
+        }
+        
+        .order-product-info {
+            flex: 1;
+        }
+        
+        .order-product-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: white;
+            font-size: 1.1rem;
+        }
+        
+        .order-product-price {
+            color: #ffcc00;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .order-details {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        .order-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1.5rem;
+        }
+        
+        .confirm-btn {
+            background: linear-gradient(90deg, #2ecc71, #27ae60);
+        }
+        
+        .confirm-btn:hover {
+            background: linear-gradient(90deg, #27ae60, #2ecc71);
+        }
+        
+        .cancel-btn {
+            background: linear-gradient(90deg, #e74c3c, #c0392b);
+        }
+        
+        .cancel-btn:hover {
+            background: linear-gradient(90deg, #c0392b, #e74c3c);
+        }
+        
+        .support-btn {
+            background: linear-gradient(90deg, #3498db, #2980b9);
+        }
+        
+        .support-btn:hover {
+            background: linear-gradient(90deg, #2980b9, #3498db);
+        }
+        
+        .support-message {
+            background: rgba(30, 30, 40, 0.8);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #3498db;
+        }
+        
+        .support-message h4 {
+            color: #3498db;
+            margin-bottom: 0.5rem;
+        }
+        
+        .support-message p {
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+        
+        footer {
+            background: #0a0a0e;
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: #aaa;
+            margin: 0 1.5rem;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .footer-links a:hover {
+            color: #6e00ff;
+        }
+        
+        .copyright {
+            color: #666;
+            font-size: 0.8rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1.5rem;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            nav ul li {
+                margin: 0.5rem;
+            }
+            
+            .auth-buttons {
+                margin-top: 1.5rem;
+            }
+            
+            .steps {
+                flex-direction: column;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .profile-avatar {
+                margin-right: 0;
+                margin-bottom: 1.5rem;
+            }
+            
+            .tabs {
+                overflow-x: auto;
+                white-space: nowrap;
+                padding-bottom: 0.5rem;
+            }
+            
+            .tab {
+                padding: 0.8rem 1.2rem;
+            }
+            
+            .order-actions {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+        
+        /* Анимации */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        /* Доп стили для "взрывного" текста */
+        .explosive-text {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, #ff00e6, #ffcc00, #6e00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(110, 0, 255, 0.5);
+            margin: 2rem 0;
+            text-align: center;
+            line-height: 1.3;
+        }
+        
+        .highlight {
+            color: #ffcc00;
+            font-weight: bold;
+        }
+        
+        .attention-block {
+            background: rgba(255, 204, 0, 0.1);
+            border-left: 4px solid #ffcc00;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .attention-block h3 {
+            color: #ffcc00;
+            margin-bottom: 1rem;
+        }
+        
+        /* Стили для админки */
+        .admin-panel {
+            padding: 3rem 0;
+            background-color: #1a1a24;
+            min-height: 100vh;
+            display: none;
+        }
+        
+        .admin-panel.active {
+            display: block;
+        }
+        
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .admin-title {
+            font-size: 2rem;
+            background: linear-gradient(90deg, #ffcc00, #ff00e6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: rgba(30, 30, 40, 0.8);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #6e00ff;
+        }
+        
+        .stat-label {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        .admin-tabs {
+            display: flex;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .admin-tab {
+            padding: 1rem 2rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            color: #aaa;
+            font-weight: bold;
+        }
+        
+        .admin-tab.active {
+            border-bottom-color: #6e00ff;
+            color: white;
+            background: linear-gradient(to top, rgba(110, 0, 255, 0.1), transparent);
+        }
+        
+        .admin-content {
+            display: none;
+        }
+        
+        .admin-content.active {
+            display: block;
+        }
+        
+        .ticket {
+            background: rgba(30, 30, 40, 0.8);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #3498db;
+        }
+        
+        .ticket-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+        
+        .ticket-id {
+            color: #6e00ff;
+            font-weight: bold;
+        }
+        
+        .ticket-status {
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .status-new {
+            background: rgba(46, 204, 113, 0.2);
+            color: #2ecc71;
+            border: 1px solid #2ecc71;
+        }
+        
+        .status-in-progress {
+            background: rgba(243, 156, 18, 0.2);
+            color: #f39c12;
+            border: 1px solid #f39c12;
+        }
+        
+        .status-resolved {
+            background: rgba(52, 152, 219, 0.2);
+            color: #3498db;
+            border: 1px solid #3498db;
+        }
+        
+        .ticket-user {
+            color: #aaa;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .ticket-subject {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+        
+        .ticket-message {
+            color: #ccc;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .ticket-order {
+            color: #ffcc00;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .ticket-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+        
+        .admin-btn {
+            padding: 0.5rem 1.5rem;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .btn-approve {
+            background: linear-gradient(90deg, #2ecc71, #27ae60);
+            color: white;
+        }
+        
+        .btn-reject {
+            background: linear-gradient(90deg, #e74c3c, #c0392b);
+            color: white;
+        }
+        
+        .btn-process {
+            background: linear-gradient(90deg, #3498db, #2980b9);
+            color: white;
+        }
+        
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        
+        .admin-table th, .admin-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .admin-table th {
+            background: rgba(110, 0, 255, 0.2);
+            color: #6e00ff;
+            font-weight: bold;
+        }
+        
+        .admin-table tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6e00ff 0%, #ff00e6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .badge {
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .badge-admin {
+            background: rgba(155, 89, 182, 0.2);
+            color: #9b59b6;
+            border: 1px solid #9b59b6;
+        }
+        
+        .badge-support {
+            background: rgba(52, 152, 219, 0.2);
+            color: #3498db;
+            border: 1px solid #3498db;
+        }
+        
+        .badge-user {
+            background: rgba(46, 204, 113, 0.2);
+            color: #2ecc71;
+            border: 1px solid #2ecc71;
+        }
+        
+        .admin-form {
+            background: rgba(30, 30, 40, 0.8);
+            padding: 2rem;
+            border-radius: 10px;
+            margin-top: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #ddd;
+            font-weight: bold;
+        }
+        
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(40, 40, 50, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            color: white;
+            font-size: 1rem;
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .admin-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .admin-tabs {
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+            
+            .admin-tab {
+                padding: 0.8rem 1.2rem;
+            }
+            
+            .ticket-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">GAMEHUB</div>
+                <nav>
+                    <ul>
+                        <li><a href="#home" class="nav-link">Главная</a></li>
+                        <li><a href="#products" class="nav-link">Товары</a></li>
+                        <li><a href="#profile" class="nav-link" id="profile-link">Профиль</a></li>
+                        <li><a href="#admin" class="nav-link" id="admin-link" style="display: none;">Админка</a></li>
+                    </ul>
+                </nav>
+                <div class="auth-buttons" id="auth-buttons">
+                    <button id="login-btn">Войти</button>
+                    <button id="register-btn">Регистрация</button>
+                </div>
+                <div id="user-menu" style="display: none;">
+                    <span id="username-display"></span>
+                    <button id="logout-btn">Выйти</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="container hero-content">
+            <h1>GAMEHUB - ТВОЙ ИГРОВОЙ РАЙ!</h1>
+            <p>БОМБА ПУШКА МАРКЕТ, ГДЕ ТЫ НАЙДЁШЬ ВСЁ, ЧТО ТОЛЬКО МОЖЕТ ПРИСНИТЬСЯ ГЕЙМЕРУ!</p>
+            <div class="explosive-text">
+                СКИНЫ | АККАУНТЫ | БУСТИНГ | ВАЛЮТА | ПРЕДМЕТЫ | ОБУЧЕНИЕ<br>
+                И ЕЩЁ ТЫСЯЧИ КРУТЫХ ШТУК!
+            </div>
+            <a href="#products" class="btn pulse">СМОТРЕТЬ ТОВАРЫ</a>
+        </div>
+    </section>
+
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <h2 class="section-title">КАК ЭТО РАБОТАЕТ?</h2>
+            <div class="attention-block">
+                <h3>Я БУДУ ПОКУПАТЬ ТОЛЬКО ТУТ!</h3>
+                <p>Серьёзно, этот маркетплейс - просто космос! Никаких кидалово, только честные сделки и мгновенные выплаты. Я уже не могу представить свою игровую жизнь без этого сайта!</p>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <h3>1. РЕГИСТРАЦИЯ</h3>
+                    <p>Быстрая как пуля - 30 секунд и ты в системе! Никаких сложных форм, только email и пароль.</p>
+                </div>
+                <div class="step">
+                    <h3>2. ВЫБОР ТОВАРА</h3>
+                    <p>Тысячи товаров на любой вкус и цвет. Сортировка, фильтры - находишь то, что нужно за пару кликов!</p>
+                </div>
+                <div class="step">
+                    <h3>3. ОПЛАТА</h3>
+                    <p>Безопасная оплата через защищённые системы. Никаких рисков - деньги под защитой до получения товара!</p>
+                </div>
+                <div class="step">
+                    <h3>4. ПОЛУЧЕНИЕ</h3>
+                    <p>Мгновенная доставка или быстрый контакт с продавцом. Подтверждаешь получение - продавец получает бабки!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="products" id="products">
+        <div class="container">
+            <h2 class="section-title">ГОРЯЧИЕ ПРЕДЛОЖЕНИЯ</h2>
+            <p style="text-align: center; margin-bottom: 2rem; font-size: 1.2rem; color: #aaa;">ТОПОВЫЕ ТОВАРЫ, КОТОРЫЕ РВУТ ЧАРТЫ!</p>
+            <div class="product-grid" id="products-container">
+                <!-- Товары будут загружаться здесь -->
+            </div>
+        </div>
+    </section>
+
+    <section class="profile" id="profile">
+        <div class="container">
+            <div class="profile-header">
+                <div class="profile-avatar" id="profile-avatar">ИИ</div>
+                <div class="profile-info">
+                    <h2 id="profile-username">ИВАН_ИГРОК</h2>
+                    <div class="profile-rating" id="profile-rating">★★★★☆ 4.2/5 (24 отзыва)</div>
+                    <p class="profile-bio" id="profile-bio">Топовый продавец с 2018 года. Быстрая доставка, честные сделки, лучшие цены. Гарантия на все товары!</p>
+                </div>
+            </div>
+            
+            <div class="tabs">
+                <div class="tab active" data-tab="products">Мои товары</div>
+                <div class="tab" data-tab="selling">Продажи</div>
+                <div class="tab" data-tab="purchases">Покупки</div>
+                <div class="tab" data-tab="support">Техподдержка</div>
+            </div>
+            
+            <div class="tab-content active" id="products-tab">
+                <button class="btn pulse" id="add-product-btn">Добавить товар</button>
+                
+                <div class="product-grid" id="user-products-container" style="margin-top: 2rem;">
+                    <!-- Товары пользователя будут здесь -->
+                </div>
+            </div>
+            
+            <div class="tab-content" id="selling-tab">
+                <div id="sales-container">
+                    <!-- Продажи пользователя будут здесь -->
+                </div>
+            </div>
+            
+            <div class="tab-content" id="purchases-tab">
+                <div id="purchases-container">
+                    <!-- Покупки пользователя будут здесь -->
+                </div>
+            </div>
+            
+            <div class="tab-content" id="support-tab">
+                <button class="btn pulse" id="new-ticket-btn">Создать новый тикет</button>
+                
+                <div id="tickets-container" style="margin-top: 2rem;">
+                    <!-- Тикеты пользователя будут здесь -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="admin-panel" id="admin">
+        <div class="container">
+            <div class="admin-header">
+                <h1 class="admin-title">Панель администратора</h1>
+                <div>
+                    <span style="color: #aaa;">Админ: </span>
+                    <span style="font-weight: bold; color: #6e00ff;" id="admin-username">SUPPORT_ADMIN</span>
+                </div>
+            </div>
+            
+            <div class="admin-stats">
+                <div class="stat-card">
+                    <div class="stat-value" id="stat-tickets">0</div>
+                    <div class="stat-label">Новых тикетов</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="stat-users">0</div>
+                    <div class="stat-label">Пользователей</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="stat-revenue">$0</div>
+                    <div class="stat-label">Общий оборот</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="stat-satisfaction">0%</div>
+                    <div class="stat-label">Удовлетворенность</div>
+                </div>
+            </div>
+            
+            <div class="admin-tabs">
+                <div class="admin-tab active" data-tab="dashboard">Дашборд</div>
+                <div class="admin-tab" data-tab="tickets">Тикеты поддержки</div>
+                <div class="admin-tab" data-tab="users">Пользователи</div>
+                <div class="admin-tab" data-tab="transactions">Транзакции</div>
+                <div class="admin-tab" data-tab="settings">Настройки</div>
+            </div>
+            
+            <div class="admin-content active" id="dashboard-content">
+                <h2 style="margin-bottom: 1.5rem; color: #6e00ff;">Последние действия</h2>
+                <div id="admin-dashboard-content">
+                    <!-- Контент дашборда будет здесь -->
+                </div>
+            </div>
+            
+            <div class="admin-content" id="tickets-content">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <h2 style="color: #6e00ff;">Все тикеты поддержки</h2>
+                    <div>
+                        <select id="tickets-filter" style="padding: 0.5rem; background: #1a1a24; color: white; border: 1px solid #6e00ff; border-radius: 5px;">
+                            <option value="all">Все статусы</option>
+                            <option value="new">Новые</option>
+                            <option value="in_progress">В работе</option>
+                            <option value="resolved">Решенные</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div id="admin-tickets-container">
+                    <!-- Все тикеты будут здесь -->
+                </div>
+            </div>
+            
+            <div class="admin-content" id="users-content">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <h2 style="color: #6e00ff;">Управление пользователями</h2>
+                    <div>
+                        <input type="text" id="users-search" placeholder="Поиск пользователей..." style="padding: 0.5rem; background: #1a1a24; color: white; border: 1px solid #6e00ff; border-radius: 5px; width: 250px;">
+                    </div>
+                </div>
+                
+                <div id="admin-users-container">
+                    <!-- Пользователи будут здесь -->
+                </div>
+            </div>
+            
+            <div class="admin-content" id="transactions-content">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <h2 style="color: #6e00ff;">Финансовые транзакции</h2>
+                    <div>
+                        <select id="transactions-type-filter" style="padding: 0.5rem; background: #1a1a24; color: white; border: 1px solid #6e00ff; border-radius: 5px; margin-right: 0.5rem;">
+                            <option value="all">Все типы</option>
+                            <option value="purchase">Покупки</option>
+                            <option value="payout">Выплаты</option>
+                            <option value="refund">Возвраты</option>
+                        </select>
+                        <input type="date" id="transactions-date-filter" style="padding: 0.5rem; background: #1a1a24; color: white; border: 1px solid #6e00ff; border-radius: 5px;">
+                    </div>
+                </div>
+                
+                <div id="admin-transactions-container">
+                    <!-- Транзакции будут здесь -->
+                </div>
+            </div>
+            
+            <div class="admin-content" id="settings-content">
+                <h2 style="margin-bottom: 1.5rem; color: #6e00ff;">Настройки системы</h2>
+                
+                <div class="admin-form">
+                    <div class="form-group">
+                        <label>Комиссия платформы (%)</label>
+                        <input type="number" id="commission-rate" value="5" min="0" max="20">
+                    </div>
+                    <div class="form-group">
+                        <label>Минимальная сумма выплаты</label>
+                        <input type="number" id="min-payout" value="10" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Email для уведомлений</label>
+                        <input type="email" id="admin-email" value="admin@gamehub.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Сообщение для пользователей</label>
+                        <textarea id="welcome-message">Добро пожаловать на GAMEHUB! Соблюдайте правила платформы и уважайте других пользователей.</textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button class="admin-btn btn-reject" id="reset-settings-btn">Сбросить</button>
+                        <button class="admin-btn btn-approve" id="save-settings-btn">Сохранить изменения</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="#">О нас</a>
+                <a href="#">Правила</a>
+                <a href="#">Поддержка</a>
+                <a href="#">Контакты</a>
+                <a href="#">Безопасность</a>
+                <a href="#">FAQ</a>
+            </div>
+            <p class="copyright">© 2023 GAMEHUB. Все права защищены. Только для взрослых. Играйте ответственно.</p>
+        </div>
+    </footer>
+
+    <!-- Модальные окна -->
+    <div class="modal" id="login-modal">
+        <div class="modal-content">
+            <h2 class="modal-title">ВХОД В АККАУНТ</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" required placeholder="Ваш email">
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Пароль</label>
+                    <input type="password" id="login-password" required placeholder="Ваш пароль">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="buy-btn close-modal">Закрыть</button>
+                    <button type="submit" class="buy-btn pulse">ВОЙТИ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="register-modal">
+        <div class="modal-content">
+            <h2 class="modal-title">РЕГИСТРАЦИЯ</h2>
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="register-username">Имя пользователя</label>
+                    <input type="text" id="register-username" required placeholder="Ваш никнейм">
+                </div>
+                <div class="form-group">
+                    <label for="register-email">Email</label>
+                    <input type="email" id="register-email" required placeholder="Ваш email">
+                </div>
+                <div class="form-group">
+                    <label for="register-password">Пароль</label>
+                    <input type="password" id="register-password" required placeholder="Придумайте пароль">
+                </div>
+                <div class="form-group">
+                    <label for="register-confirm-password">Подтвердите пароль</label>
+                    <input type="password" id="register-confirm-password" required placeholder="Повторите пароль">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="buy-btn close-modal">Закрыть</button>
+                    <button type="submit" class="buy-btn pulse">ЗАРЕГИСТРИРОВАТЬСЯ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="add-product-modal">
+        <div class="modal-content">
+            <h2 class="modal-title">ДОБАВИТЬ ТОВАР</h2>
+            <form id="add-product-form">
+                <div class="form-group">
+                    <label for="product-name">Название товара</label>
+                    <input type="text" id="product-name" required placeholder="Например: CS:GO ★ Нож Karambit | Fade">
+                </div>
+                <div class="form-group">
+                    <label for="product-price">Цена ($)</label>
+                    <input type="number" id="product-price" min="0" step="0.01" required placeholder="Например: 299.99">
+                </div>
+                <div class="form-group">
+                    <label for="product-category">Категория</label>
+                    <select id="product-category" required>
+                        <option value="">Выберите категорию</option>
+                        <option value="skins">Скины</option>
+                        <option value="accounts">Аккаунты</option>
+                        <option value="currency">Игровая валюта</option>
+                        <option value="boosting">Бустинг</option>
+                        <option value="items">Предметы</option>
+                        <option value="coaching">Обучение</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="product-game">Игра</label>
+                    <input type="text" id="product-game" required placeholder="Например: CS:GO, Dota 2, WoW">
+                </div>
+                <div class="form-group">
+                    <label for="product-image">Изображение товара (URL)</label>
+                    <input type="url" id="product-image" required placeholder="https://example.com/image.jpg">
+                </div>
+                <div class="form-group">
+                    <label for="product-description">Описание товара</label>
+                    <textarea id="product-description" required placeholder="Подробно опишите товар, его состояние, особенности и т.д."></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="buy-btn close-modal">Закрыть</button>
+                    <button type="submit" class="buy-btn pulse">ДОБАВИТЬ ТОВАР</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="support-modal">
+        <div class="modal-content">
+            <h2 class="modal-title">НОВЫЙ ТИКЕТ В ПОДДЕРЖКУ</h2>
+            <form id="support-form">
+                <div class="form-group">
+                    <label for="support-subject">Тема</label>
+                    <input type="text" id="support-subject" required placeholder="Кратко опишите проблему">
+                </div>
+                <div class="form-group">
+                    <label for="support-order">Номер заказа (если есть)</label>
+                    <input type="text" id="support-order" placeholder="Например: #1001">
+                </div>
+                <div class="form-group">
+                    <label for="support-message">Описание проблемы</label>
+                    <textarea id="support-message" required placeholder="Подробно опишите вашу проблему"></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="buy-btn close-modal">Закрыть</button>
+                    <button type="submit" class="buy-btn support-btn pulse">ОТПРАВИТЬ ТИКЕТ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="ticket-modal">
+        <div class="modal-content">
+            <h2 class="modal-title">Тикет <span id="ticket-id-display"></span></h2>
+            
+            <div id="ticket-content">
+                <!-- Содержимое тикета будет здесь -->
+            </div>
+            
+            <div class="form-group">
+                <label>Ответ поддержки</label>
+                <textarea id="ticket-response" placeholder="Введите ваш ответ..." style="min-height: 100px;"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>Действие</label>
+                <select id="ticket-action">
+                    <option value="no_action">Оставить как есть</option>
+                    <option value="refund">Вернуть деньги покупателю</option>
+                    <option value="approve">Перевести деньги продавцу</option>
+                    <option value="ban">Заблокировать продавца</option>
+                </select>
+            </div>
+            
+            <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1.5rem;">
+                <button class="admin-btn btn-reject" id="close-ticket-btn">Закрыть</button>
+                <button class="admin-btn btn-approve" id="submit-ticket-response">Отправить ответ</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Хранилище данных (заменяет бэкенд)
+        const db = {
+            users: JSON.parse(localStorage.getItem('users')) || [],
+            products: JSON.parse(localStorage.getItem('products')) || [],
+            orders: JSON.parse(localStorage.getItem('orders')) || [],
+            tickets: JSON.parse(localStorage.getItem('tickets')) || [],
+            settings: JSON.parse(localStorage.getItem('settings')) || {
+                commission: 5,
+                minPayout: 10,
+                adminEmail: 'admin@gamehub.com',
+                welcomeMessage: 'Добро пожаловать на GAMEHUB! Соблюдайте правила платформы и уважайте других пользователей.'
+            }
+        };
+
+        // Текущий пользователь
+        let currentUser = null;
+        let isAdmin = false;
+
+        // Инициализация данных
+        function initData() {
+            // Добавляем админа, если его нет
+            if (!db.users.some(u => u.username === 'admin')) {
+                db.users.push({
+                    id: generateId(),
+                    username: 'admin',
+                    email: 'admin@gamehub.com',
+                    password: 'admin123',
+                    role: 'admin',
+                    rating: 5,
+                    balance: 0,
+                    createdAt: new Date().toISOString()
+                });
+                saveData();
+            }
+            
+            // Заполняем тестовыми данными, если база пуста
+            if (db.products.length === 0) {
+                db.products = [
+                    {
+                        id: generateId(),
+                        name: "CS:GO ★ НОЖ BAYONET | URBAN MASKED",
+                        price: 149.99,
+                        category: "skins",
+                        game: "CS:GO",
+                        description: "ОХУЕННЫЙ нож в отличном состоянии! Float 0.12 - выглядит просто огонь! Срочная продажа!",
+                        imageUrl: "https://images.unsplash.com/photo-1598550476439-6847785fcea6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                        sellerId: "seller1",
+                        sellerName: "CS_LEGEND",
+                        status: "available",
+                        createdAt: new Date().toISOString()
+                    },
+                    {
+                        id: generateId(),
+                        name: "WoW Gold - 1,000,000",
+                        price: 99.00,
+                        category: "currency",
+                        game: "WoW",
+                        description: "МЕГА СТАВКА! Лучшая цена на рынке! Доставка за 15 минут в любой момент дня и ночи!",
+                        imageUrl: "https://images.unsplash.com/photo-1534972195531-d756b9bfa9f2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                        sellerId: "seller2",
+                        sellerName: "WoW_GOLD_KING",
+                        status: "available",
+                        createdAt: new Date().toISOString()
+                    }
+                ];
+                saveData();
+            }
+            
+            if (db.users.length <= 1) {
+                db.users.push(
+                    {
+                        id: "seller1",
+                        username: "CS_LEGEND",
+                        email: "cs_legend@example.com",
+                        password: "seller1",
+                        role: "user",
+                        rating: 4.8,
+                        balance: 500,
+                        createdAt: new Date().toISOString()
+                    },
+                    {
+                        id: "seller2",
+                        username: "WoW_GOLD_KING",
+                        email: "wow_gold@example.com",
+                        password: "seller2",
+                        role: "user",
+                        rating: 4.9,
+                        balance: 1200,
+                        createdAt: new Date().toISOString()
+                    },
+                    {
+                        id: "user1",
+                        username: "Иван_Игрок",
+                        email: "ivan@example.com",
+                        password: "user1",
+                        role: "user",
+                        rating: 4.2,
+                        balance: 200,
+                        createdAt: new Date().toISOString()
+                    }
+                );
+                saveData();
+            }
+            
+            if (db.orders.length === 0) {
+                db.orders = [
+                    {
+                        id: generateId(),
+                        productId: db.products[0].id,
+                        buyerId: "user1",
+                        sellerId: db.products[0].sellerId,
+                        price: db.products[0].price,
+                        status: "completed",
+                        createdAt: new Date(Date.now() - 86400000).toISOString(),
+                        completedAt: new Date().toISOString()
+                    }
+                ];
+                saveData();
+            }
+            
+            if (db.tickets.length === 0) {
+                db.tickets = [
+                    {
+                        id: generateId(),
+                        subject: "Не получен товар",
+                        orderId: db.orders[0].id,
+                        message: "Я оплатил товар 3 дня назад, но до сих пор не получил его",
+                        userId: "user1",
+                        status: "resolved",
+                        response: "Проблема решена, деньги возвращены",
+                        adminId: "admin",
+                        createdAt: new Date(Date.now() - 86400000).toISOString(),
+                        resolvedAt: new Date().toISOString()
+                    }
+                ];
+                saveData();
+            }
+        }
+
+        // Сохранение данных
+        function saveData() {
+            localStorage.setItem('users', JSON.stringify(db.users));
+            localStorage.setItem('products', JSON.stringify(db.products));
+            localStorage.setItem('orders', JSON.stringify(db.orders));
+            localStorage.setItem('tickets', JSON.stringify(db.tickets));
+            localStorage.setItem('settings', JSON.stringify(db.settings));
+        }
+
+        // Генератор ID
+        function generateId() {
+            return Math.random().toString(36).substr(2, 9);
+        }
+
+        // Инициализация при загрузке
+        document.addEventListener('DOMContentLoaded', () => {
+            initData();
+            initModals();
+            initTabs();
+            loadProducts();
+            
+            // Проверяем авторизацию
+            const loggedInUser = localStorage.getItem('currentUser');
+            if (loggedInUser) {
+                currentUser = JSON.parse(loggedInUser);
+                updateAuthUI();
+                loadUserData();
+            }
+        });
+
+        // Инициализация модальных окон
+        function initModals() {
+            // Открытие модальных окон
+            document.getElementById('login-btn').addEventListener('click', () => {
+                document.getElementById('login-modal').style.display = 'flex';
+            });
+            
+            document.getElementById('register-btn').addEventListener('click', () => {
+                document.getElementById('register-modal').style.display = 'flex';
+            });
+            
+            document.getElementById('add-product-btn').addEventListener('click', () => {
+                document.getElementById('add-product-modal').style.display = 'flex';
+            });
+            
+            document.getElementById('new-ticket-btn').addEventListener('click', () => {
+                document.getElementById('support-modal').style.display = 'flex';
+            });
+            
+            // Закрытие модальных окон
+            document.querySelectorAll('.close-modal').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    this.closest('.modal').style.display = 'none';
+                });
+            });
+            
+            // Закрытие по клику вне окна
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Обработка форм
+            document.getElementById('login-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = document.getElementById('login-email').value;
+                const password = document.getElementById('login-password').value;
+                loginUser(email, password);
+            });
+            
+            document.getElementById('register-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const username = document.getElementById('register-username').value;
+                const email = document.getElementById('register-email').value;
+                const password = document.getElementById('register-password').value;
+                const confirmPassword = document.getElementById('register-confirm-password').value;
+                
+                if (password !== confirmPassword) {
+                    alert('Пароли не совпадают!');
+                    return;
+                }
+                
+                registerUser(username, email, password);
+            });
+            
+            document.getElementById('add-product-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                addProduct();
+            });
+            
+            document.getElementById('support-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                createTicket();
+            });
+            
+            // Выход
+            document.getElementById('logout-btn').addEventListener('click', logoutUser);
+        }
+
+        // Инициализация вкладок
+        function initTabs() {
+            // Вкладки профиля
+            document.querySelectorAll('#profile .tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    document.querySelectorAll('#profile .tab').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('#profile .tab-content').forEach(c => c.classList.remove('active'));
+                    
+                    this.classList.add('active');
+                    const tabId = this.getAttribute('data-tab');
+                    document.getElementById(tabId + '-tab').classList.add('active');
+                });
+            });
+            
+            // Вкладки админки
+            document.querySelectorAll('#admin .admin-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    document.querySelectorAll('#admin .admin-tab').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('#admin .admin-content').forEach(c => c.classList.remove('active'));
+                    
+                    this.classList.add('active');
+                    const tabId = this.getAttribute('data-tab');
+                    document.getElementById(tabId + '-content').classList.add('active');
+                });
+            });
+            
+            // Навигация
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    
+                    // Скрываем все секции
+                    document.querySelectorAll('section').forEach(section => {
+                        section.style.display = 'none';
+                        section.classList.remove('active');
+                    });
+                    
+                    // Показываем целевую секцию
+                    document.querySelector(targetId).style.display = 'block';
+                    document.querySelector(targetId).classList.add('active');
+                    
+                    // Загружаем данные для секции
+                    if (targetId === '#profile') {
+                        loadUserData();
+                    } else if (targetId === '#admin') {
+                        loadAdminData();
+                    } else if (targetId === '#products') {
+                        loadProducts();
+                    }
+                });
+            });
+        }
+
+        // Авторизация
+        function loginUser(email, password) {
+            const user = db.users.find(u => u.email === email && u.password === password);
+            if (user) {
+                currentUser = user;
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                updateAuthUI();
+                document.getElementById('login-modal').style.display = 'none';
+                loadUserData();
+                return true;
+            } else {
+                alert('Неверный email или пароль');
+                return false;
+            }
+        }
+
+        // Регистрация
+        function registerUser(username, email, password) {
+            if (db.users.some(u => u.email === email)) {
+                alert('Пользователь с таким email уже существует');
+                return false;
+            }
+            
+            const newUser = {
+                id: generateId(),
+                username,
+                email,
+                password,
+                role: 'user',
+                rating: 0,
+                balance: 0,
+                createdAt: new Date().toISOString()
+            };
+            
+            db.users.push(newUser);
+            saveData();
+            
+            alert('Регистрация успешна! Теперь вы можете войти.');
+            document.getElementById('register-modal').style.display = 'none';
+            return true;
+        }
+
+        // Выход
+        function logoutUser() {
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            updateAuthUI();
+            
+            // Скрываем профиль и админку
+            document.querySelector('#profile').style.display = 'none';
+            document.querySelector('#admin').style.display = 'none';
+            
+            // Показываем главную
+            document.querySelector('#home').style.display = 'block';
+        }
+
+        // Обновление UI авторизации
+        function updateAuthUI() {
+            if (currentUser) {
+                document.getElementById('auth-buttons').style.display = 'none';
+                document.getElementById('user-menu').style.display = 'flex';
+                document.getElementById('username-display').textContent = currentUser.username;
+                
+                // Показываем/скрываем ссылку на админку
+                document.getElementById('admin-link').style.display = currentUser.role === 'admin' ? 'block' : 'none';
+            } else {
+                document.getElementById('auth-buttons').style.display = 'flex';
+                document.getElementById('user-menu').style.display = 'none';
+                document.getElementById('admin-link').style.display = 'none';
+            }
+        }
+
+        // Загрузка товаров
+        function loadProducts() {
+            const container = document.getElementById('products-container');
+            container.innerHTML = '';
+            
+            db.products.filter(p => p.status === 'available').forEach(product => {
+                const seller = db.users.find(u => u.id === product.sellerId);
+                container.innerHTML += `
+                    <div class="product-card" data-id="${product.id}" data-seller-id="${product.sellerId}">
+                        <div class="product-image" style="background-image: url('${product.imageUrl}')"></div>
+                        <div class="product-info">
+                            <h3 class="product-title">${product.name}</h3>
+                            <div class="product-price">$${product.price.toFixed(2)}</div>
+                            <div class="product-description">${product.description}</div>
+                            <div class="product-seller">
+                                <div class="seller-avatar">${seller.username.substring(0, 2).toUpperCase()}</div>
+                                <span class="seller-name">${seller.username}</span>
+                            </div>
+                            <div class="product-rating">${'★'.repeat(Math.floor(seller.rating))}${'☆'.repeat(5 - Math.floor(seller.rating))} (${seller.rating.toFixed(1)})</div>
+                            <button class="buy-btn pulse">КУПИТЬ СЕЙЧАС</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Добавление товара
+        function addProduct() {
+            const product = {
+                id: generateId(),
+                name: document.getElementById('product-name').value,
+                price: parseFloat(document.getElementById('product-price').value),
+                category: document.getElementById('product-category').value,
+                game: document.getElementById('product-game').value,
+                description: document.getElementById('product-description').value,
+                imageUrl: document.getElementById('product-image').value,
+                sellerId: currentUser.id,
+                sellerName: currentUser.username,
+                status: 'available',
+                createdAt: new Date().toISOString()
+            };
+            
+            db.products.push(product);
+            saveData();
+            
+            alert('Товар успешно добавлен!');
+            document.getElementById('add-product-modal').style.display = 'none';
+            loadUserProducts();
+        }
+
+        // Загрузка данных пользователя
+        function loadUserData() {
+            if (!currentUser) return;
+            
+            // Обновляем профиль
+            document.getElementById('profile-avatar').textContent = currentUser.username.substring(0, 2).toUpperCase();
+            document.getElementById('profile-username').textContent = currentUser.username;
+            document.getElementById('profile-rating').textContent = `${'★'.repeat(Math.floor(currentUser.rating))}${'☆'.repeat(5 - Math.floor(currentUser.rating))} ${currentUser.rating.toFixed(1)}/5`;
+            document.getElementById('profile-bio').textContent = currentUser.bio || 'Пользователь GAMEHUB';
+            
+            // Загружаем товары пользователя
+            loadUserProducts();
+            
+            // Загружаем продажи
+            loadUserSales();
+            
+            // Загружаем покупки
+            loadUserPurchases();
+            
+            // Загружаем тикеты
+            loadUserTickets();
+        }
+
+        // Загрузка товаров пользователя
+        function loadUserProducts() {
+            const container = document.getElementById('user-products-container');
+            container.innerHTML = '';
+            
+            const userProducts = db.products.filter(p => p.sellerId === currentUser.id);
+            
+            if (userProducts.length === 0) {
+                container.innerHTML = '<p style="color: #aaa; text-align: center;">У вас пока нет товаров</p>';
+                return;
+            }
+            
+            userProducts.forEach(product => {
+                container.innerHTML += `
+                    <div class="product-card" data-id="${product.id}">
+                        <div class="product-image" style="background-image: url('${product.imageUrl}')"></div>
+                        <div class="product-info">
+                            <h3 class="product-title">${product.name}</h3>
+                            <div class="product-price">$${product.price.toFixed(2)}</div>
+                            <div class="product-description">${product.description}</div>
+                            <div class="product-actions">
+                                <button class="buy-btn edit-product-btn" style="background: linear-gradient(90deg, #f39c12, #e67e22);">Редактировать</button>
+                                <button class="buy-btn delete-product-btn" style="background: linear-gradient(90deg, #e74c3c, #c0392b); margin-top: 0.5rem;">Удалить</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            // Навешиваем обработчики для кнопок
+            document.querySelectorAll('.edit-product-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const productId = this.closest('.product-card').dataset.id;
+                    editProduct(productId);
+                });
+            });
+            
+            document.querySelectorAll('.delete-product-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const productId = this.closest('.product-card').dataset.id;
+                    deleteProduct(productId);
+                });
+            });
+        }
+
+        // Редактирование товара
+        function editProduct(productId) {
+            const product = db.products.find(p => p.id === productId);
+            if (!product) return;
+            
+            // Заполняем форму
+            document.getElementById('product-name').value = product.name;
+            document.getElementById('product-price').value = product.price;
+            document.getElementById('product-category').value = product.category;
+            document.getElementById('product-game').value = product.game;
+            document.getElementById('product-image').value = product.imageUrl;
+            document.getElementById('product-description').value = product.description;
+            
+            // Показываем модальное окно
+            document.getElementById('add-product-modal').style.display = 'flex';
+            
+            // Меняем заголовок и обработчик
+            document.querySelector('#add-product-modal .modal-title').textContent = 'РЕДАКТИРОВАТЬ ТОВАР';
+            const form = document.getElementById('add-product-form');
+            form.onsubmit = function(e) {
+                e.preventDefault();
+                
+                // Обновляем товар
+                product.name = document.getElementById('product-name').value;
+                product.price = parseFloat(document.getElementById('product-price').value);
+                product.category = document.getElementById('product-category').value;
+                product.game = document.getElementById('product-game').value;
+                product.imageUrl = document.getElementById('product-image').value;
+                product.description = document.getElementById('product-description').value;
+                
+                saveData();
+                alert('Товар успешно обновлен!');
+                document.getElementById('add-product-modal').style.display = 'none';
+                loadUserProducts();
+                
+                // Возвращаем оригинальный обработчик
+                form.onsubmit = addProduct;
+                document.querySelector('#add-product-modal .modal-title').textContent = 'ДОБАВИТЬ ТОВАР';
+            };
+        }
+
+        // Удаление товара
+        function deleteProduct(productId) {
+            if (confirm('Вы уверены, что хотите удалить этот товар?')) {
+                const index = db.products.findIndex(p => p.id === productId);
+                if (index !== -1) {
+                    db.products.splice(index, 1);
+                    saveData();
+                    loadUserProducts();
+                }
+            }
+        }
+
+        // Загрузка продаж пользователя
+        function loadUserSales() {
+            const container = document.getElementById('sales-container');
+            container.innerHTML = '';
+            
+            const sales = db.orders.filter(o => o.sellerId === currentUser.id);
+            
+            if (sales.length === 0) {
+                container.innerHTML = '<p style="color: #aaa; text-align: center;">У вас пока нет продаж</p>';
+                return;
+            }
+            
+            sales.forEach(order => {
+                const product = db.products.find(p => p.id === order.productId);
+                const buyer = db.users.find(u => u.id === order.buyerId);
+                
+                if (!product || !buyer) return;
+                
+                let actions = '';
+                if (order.status === 'pending_payment') {
+                    actions = '<p style="color: #aaa; text-align: center;">Ожидается оплата</p>';
+                } else if (order.status === 'paid') {
+                    actions = `
+                        <div class="order-actions">
+                            <button class="buy-btn confirm-btn pulse">Отправить товар</button>
+                        </div>
+                    `;
+                } else if (order.status === 'shipped') {
+                    actions = '<p style="color: #aaa; text-align: center;">Ожидает подтверждения получения</p>';
+                } else if (order.status === 'completed') {
+                    actions = '<p style="color: #2ecc71; text-align: center;">Завершено</p>';
+                }
+                
+                container.innerHTML += `
+                    <div class="order" data-id="${order.id}">
+                        <div class="order-header">
+                            <span class="order-id">Заказ #${order.id.substring(0, 6)}</span>
+                            <span class="order-status ${getStatusClass(order.status)}">${getStatusText(order.status)}</span>
+                        </div>
+                        <div class="order-product">
+                            <div class="order-product-image" style="background-image: url('${product.imageUrl}')"></div>
+                            <div class="order-product-info">
+                                <div class="order-product-title">${product.name}</div>
+                                <div class="order-product-price">$${order.price.toFixed(2)}</div>
+                                <p class="order-details">Покупатель: ${buyer.username}<br>Дата: ${formatDate(order.createdAt)}</p>
+                            </div>
+                        </div>
+                        ${actions}
+                    </div>
+                `;
+            });
+            
+            // Навешиваем обработчики на кнопки
+            document.querySelectorAll('.confirm-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const orderId = this.closest('.order').dataset.id;
+                    updateOrderStatus(orderId, 'shipped');
+                });
+            });
+        }
+
+        // Загрузка покупок пользователя
+        function loadUserPurchases() {
+            const container = document.getElementById('purchases-container');
+            container.innerHTML = '';
+            
+            const purchases = db.orders.filter(o => o.buyerId === currentUser.id);
+            
+            if (purchases.length === 0) {
+                container.innerHTML = '<p style="color: #aaa; text-align: center;">У вас пока нет покупок</p>';
+                return;
+            }
+            
+            purchases.forEach(order => {
+                const product = db.products.find(p => p.id === order.productId);
+                const seller = db.users.find(u => u.id === order.sellerId);
+                
+                if (!product || !seller) return;
+                
+                let actions = '';
+                if (order.status === 'pending_payment') {
+                    actions = `
+                        <div class="order-actions">
+                            <button class="buy-btn confirm-btn pulse">Оплатить</button>
+                            <button class="buy-btn cancel-btn">Отменить</button>
+                        </div>
+                    `;
+                } else if (order.status === 'paid') {
+                    actions = '<p style="color: #aaa; text-align: center;">Ожидает отправки</p>';
+                } else if (order.status === 'shipped') {
+                    actions = `
+                        <div class="order-actions">
+                            <button class="buy-btn confirm-btn pulse">Подтвердить получение</button>
+                            <button class="buy-btn cancel-btn">Открыть спор</button>
+                        </div>
+                    `;
+                } else if (order.status === 'completed') {
+                    actions = '<p style="color: #2ecc71; text-align: center;">Завершено</p>';
+                } else if (order.status === 'cancelled') {
+                    actions = '<p style="color: #e74c3c; text-align: center;">Отменено</p>';
+                } else if (order.status === 'dispute') {
+                    actions = '<p style="color: #3498db; text-align: center;">Ожидает решения поддержки</p>';
+                }
+                
+                container.innerHTML += `
+                    <div class="order" data-id="${order.id}">
+                        <div class="order-header">
+                            <span class="order-id">Заказ #${order.id.substring(0, 6)}</span>
+                            <span class="order-status ${getStatusClass(order.status)}">${getStatusText(order.status)}</span>
+                        </div>
+                        <div class="order-product">
+                            <div class="order-product-image" style="background-image: url('${product.imageUrl}')"></div>
+                            <div class="order-product-info">
+                                <div class="order-product-title">${product.name}</div>
+                                <div class="order-product-price">$${order.price.toFixed(2)}</div>
+                                <p class="order-details">Продавец: ${seller.username}<br>Дата: ${formatDate(order.createdAt)}</p>
+                            </div>
+                        </div>
+                        ${actions}
+                    </div>
+                `;
+            });
+            
+            // Навешиваем обработчики на кнопки
+            document.querySelectorAll('.confirm-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const orderId = this.closest('.order').dataset.id;
+                    const order = db.orders.find(o => o.id === orderId);
+                    
+                    if (order.status === 'pending_payment') {
+                        // Оплата заказа
+                        if (confirm(`Подтвердить оплату $${order.price.toFixed(2)}?`)) {
+                            updateOrderStatus(orderId, 'paid');
+                        }
+                    } else if (order.status === 'shipped') {
+                        // Подтверждение получения
+                        if (confirm('Подтверждаете, что получили товар и он соответствует описанию?')) {
+                            completeOrder(orderId);
+                        }
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.cancel-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const orderId = this.closest('.order').dataset.id;
+                    const order = db.orders.find(o => o.id === orderId);
+                    
+                    if (order.status === 'pending_payment') {
+                        // Отмена заказа
+                        if (confirm('Вы уверены, что хотите отменить этот заказ?')) {
+                            updateOrderStatus(orderId, 'cancelled');
+                        }
+                    } else if (order.status === 'shipped') {
+                        // Открытие спора
+                        if (confirm('Открыть спор по этому заказу?')) {
+                            updateOrderStatus(orderId, 'dispute');
+                            document.getElementById('support-order').value = `#${orderId.substring(0, 6)}`;
+                            document.getElementById('support-modal').style.display = 'flex';
+                        }
+                    }
+                });
+            });
+        }
+
+        // Загрузка тикетов пользователя
+        function loadUserTickets() {
+            const container = document.getElementById('tickets-container');
+            container.innerHTML = '';
+            
+            const tickets = db.tickets.filter(t => t.userId === currentUser.id);
+            
+            if (tickets.length === 0) {
+                container.innerHTML = '<p style="color: #aaa; text-align: center;">У вас пока нет тикетов</p>';
+                return;
+            }
+            
+            tickets.forEach(ticket => {
+                container.innerHTML += `
+                    <div class="ticket" data-id="${ticket.id}">
+                        <div class="ticket-header">
+                            <span class="ticket-id">Тикет #${ticket.id.substring(0, 6)}</span>
+                            <span class="ticket-status ${getStatusClass(ticket.status)}">${getStatusText(ticket.status)}</span>
+                        </div>
+                        <div class="ticket-subject">${ticket.subject}</div>
+                        <div class="ticket-message">${ticket.message}</div>
+                        ${ticket.orderId ? `<div class="ticket-order">Связанный заказ: ${ticket.orderId}</div>` : ''}
+                        ${ticket.response ? `
+                            <div class="support-message">
+                                <h4>Ответ поддержки:</h4>
+                                <p>${ticket.response}</p>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            });
+        }
+
+        // Создание тикета
+        function createTicket() {
+            const ticket = {
+                id: generateId(),
+                subject: document.getElementById('support-subject').value,
+                orderId: document.getElementById('support-order').value,
+                message: document.getElementById('support-message').value,
+                userId: currentUser.id,
+                status: 'new',
+                createdAt: new Date().toISOString()
+            };
+            
+            db.tickets.push(ticket);
+            saveData();
+            
+            // Если есть связанный заказ, обновляем его статус
+            if (ticket.orderId) {
+                const orderId = ticket.orderId.substring(1); // Убираем #
+                const order = db.orders.find(o => o.id.startsWith(orderId));
+                if (order) {
+                    order.status = 'dispute';
+                    saveData();
+                }
+            }
+            
+            alert('Тикет создан! Мы свяжемся с вами в ближайшее время.');
+            document.getElementById('support-modal').style.display = 'none';
+            loadUserTickets();
+        }
+
+        // Обновление статуса заказа
+        function updateOrderStatus(orderId, newStatus) {
+            const order = db.orders.find(o => o.id === orderId);
+            if (order) {
+                order.status = newStatus;
+                
+                if (newStatus === 'completed') {
+                    order.completedAt = new Date().toISOString();
+                    
+                    // Переводим деньги продавцу (минус комиссия)
+                    const seller = db.users.find(u => u.id === order.sellerId);
+                    if (seller) {
+                        const commission = order.price * (db.settings.commission / 100);
+                        const amount = order.price - commission;
+                        seller.balance += amount;
+                    }
+                }
+                
+                saveData();
+                loadUserPurchases();
+                loadUserSales();
+            }
+        }
+
+        // Завершение заказа
+        function completeOrder(orderId) {
+            const order = db.orders.find(o => o.id === orderId);
+            if (order) {
+                order.status = 'completed';
+                order.completedAt = new Date().toISOString();
+                
+                // Переводим деньги продавцу (минус комиссия)
+                const seller = db.users.find(u => u.id === order.sellerId);
+                if (seller) {
+                    const commission = order.price * (db.settings.commission / 100);
+                    const amount = order.price - commission;
+                    seller.balance += amount;
+                }
+                
+                saveData();
+                loadUserPurchases();
+                loadUserSales();
+                
+                alert('Заказ завершен! Деньги переведены продавцу.');
+            }
+        }
+
+        // Загрузка данных админки
+        function loadAdminData() {
+            if (!currentUser || currentUser.role !== 'admin') return;
+            
+            // Обновляем статистику
+            document.getElementById('stat-tickets').textContent = db.tickets.filter(t => t.status === 'new').length;
+            document.getElementById('stat-users').textContent = db.users.length;
+            
+            const revenue = db.orders
+                .filter(o => o.status === 'completed')
+                .reduce((sum, order) => sum + order.price, 0);
+            document.getElementById('stat-revenue').textContent = `$${revenue.toFixed(2)}`;
+            
+            // Загружаем тикеты
+            loadAdminTickets();
+            
+            // Загружаем пользователей
+            loadAdminUsers();
+            
+            // Загружаем транзакции
+            loadAdminTransactions();
+            
+            // Загружаем настройки
+            loadAdminSettings();
+        }
+
+        // Загрузка тикетов в админке
+        function loadAdminTickets(filter = 'all') {
+            const container = document.getElementById('admin-tickets-container');
+            container.innerHTML = '';
+            
+            let tickets = [...db.tickets];
+            
+            if (filter === 'new') {
+                tickets = tickets.filter(t => t.status === 'new');
+            } else if (filter === 'in_progress') {
+                tickets = tickets.filter(t => t.status === 'in_progress');
+            } else if (filter === 'resolved') {
+                tickets = tickets.filter(t => t.status === 'resolved');
+            }
+            
+            if (tickets.length === 0) {
+                container.innerHTML = '<p style="color: #aaa; text-align: center;">Нет тикетов</p>';
+                return;
+            }
+            
+            tickets.forEach(ticket => {
+                const user = db.users.find(u => u.id === ticket.userId);
+                container.innerHTML += `
+                    <div class="ticket" data-id="${ticket.id}">
+                        <div class="ticket-header">
+                            <span class="ticket-id">Тикет #${ticket.id.substring(0, 6)}</span>
+                            <span class="ticket-status ${getStatusClass(ticket.status)}">${getStatusText(ticket.status)}</span>
+                        </div>
+                        <div class="ticket-user">От: ${user ? user.username : 'Неизвестный пользователь'}</div>
+                        <div class="ticket-subject">${ticket.subject}</div>
+                        <div class="ticket-message">${ticket.message}</div>
+                        ${ticket.orderId ? `<div class="ticket-order">Связанный заказ: ${ticket.orderId}</div>` : ''}
+                        <div class="ticket-actions">
+                            <button class="admin-btn btn-process">Просмотреть</button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            // Навешиваем обработчики
+            document.querySelectorAll('#admin-tickets-container .btn-process').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const ticketId = this.closest('.ticket').dataset.id;
+                    openTicketModal(ticketId);
+                });
+            });
+        }
+
+        // Открытие модального окна тикета
+        function openTicketModal(ticketId) {
+            const ticket = db.tickets.find(t => t.id === ticketId);
+            if (!ticket) return;
+            
+            const user = db.users.find(u => u.id === ticket.userId);
+            const order = ticket.orderId ? db.orders.find(o => o.id.startsWith(ticket.orderId.substring(1))) : null;
+            const product = order ? db.products.find(p => p.id === order.productId) : null;
+            
+            document.getElementById('ticket-id-display').textContent = `#${ticket.id.substring(0, 6)}`;
+            
+            let ticketContent = `
+                <div style="background: rgba(30, 30, 40, 0.8); padding: 1rem; border-radius: 5px; margin-bottom: 1.5rem;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span style="font-weight: bold;">${user ? user.username : 'Неизвестный пользователь'}</span>
+                        <span style="color: #aaa;">${formatDate(ticket.createdAt)}</span>
+                    </div>
+                    <div style="margin-bottom: 0.5rem; font-weight: bold;">${ticket.subject}</div>
+                    <div style="color: #ccc; margin-bottom: 1rem;">${ticket.message}</div>
+            `;
+            
+            if (order && product) {
+                ticketContent += `
+                    <div style="color: #ffcc00;">
+                        Связанный заказ: #${order.id.substring(0, 6)} (${product.name}, $${order.price.toFixed(2)})
+                    </div>
+                `;
+            }
+            
+            ticketContent += `</div>`;
+            
+            if (ticket.response) {
+                ticketContent += `
+                    <div style="background: rgba(52, 152, 219, 0.1); padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; border-left: 3px solid #3498db;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span style="font-weight: bold; color: #3498db;">${ticket.adminId === currentUser.id ? 'Вы' : 'Администратор'}</span>
+                            <span style="color: #aaa;">${formatDate(ticket.resolvedAt)}</span>
+                        </div>
+                        <div style="color: #ccc;">${ticket.response}</div>
+                    </div>
+                `;
+            }
+            
+            document.getElementById('ticket-content').innerHTML = ticketContent;
+            document.getElementById('ticket-response').value = '';
+            document.getElementById('ticket-action').value = 'no_action';
+            document.getElementById('ticket-modal').style.display = 'flex';
+            
+            // Сохраняем ID текущего тикета
+            document.getElementById('submit-ticket-response').dataset.ticketId = ticketId;
+        }
+
+        // Обработка ответа на тикет
+        document.getElementById('submit-ticket-response').addEventListener('click', function() {
+            const ticketId = this.dataset.ticketId;
+            const response = document.getElementById('ticket-response').value;
+            const action = document.getElementById('ticket-action').value;
+            
+            if (!response && action === 'no_action') {
+                alert('Пожалуйста, введите ответ или выберите действие');
+                return;
+            }
+            
+            const ticket = db.tickets.find(t => t.id === ticketId);
+            if (ticket) {
+                ticket.status = 'resolved';
+                ticket.response = response;
+                ticket.adminId = currentUser.id;
+                ticket.resolvedAt = new Date().toISOString();
+                
+                // Обработка выбранного действия
+                if (action !== 'no_action' && ticket.orderId) {
+                    const orderId = ticket.orderId.substring(1); // Убираем #
+                    const order = db.orders.find(o => o.id.startsWith(orderId));
+                    
+                    if (order) {
+                        if (action === 'refund') {
+                            // Возврат денег покупателю
+                            order.status = 'cancelled';
+                            const buyer = db.users.find(u => u.id === order.buyerId);
+                            if (buyer) {
+                                buyer.balance += order.price;
+                            }
+                        } else if (action === 'approve') {
+                            // Подтверждение сделки
+                            order.status = 'completed';
+                            order.completedAt = new Date().toISOString();
+                            
+                            // Переводим деньги продавцу (минус комиссия)
+                            const seller = db.users.find(u => u.id === order.sellerId);
+                            if (seller) {
+                                const commission = order.price * (db.settings.commission / 100);
+                                const amount = order.price - commission;
+                                seller.balance += amount;
+                            }
+                        } else if (action === 'ban') {
+                            // Блокировка продавца
+                            const seller = db.users.find(u => u.id === order.sellerId);
+                            if (seller) {
+                                seller.role = 'banned';
+                            }
+                        }
+                    }
+                }
+                
+                saveData();
+                alert('Тикет успешно обработан!');
+                document.getElementById('ticket-modal').style.display = 'none';
+                loadAdminTickets();
+                loadUserTickets();
+            }
+        });
+
+        // Загрузка пользователей в админке
+        function loadAdminUsers(search = '') {
+            const container = document.getElementById('admin-users-container');
+            container.innerHTML = '';
+            
+            let users = [...db.users];
+            
+            if (search) {
+                const searchLower = search.toLowerCase();
+                users = users.filter(u => 
+                    u.username.toLowerCase().includes(searchLower) || 
+                    u.email.toLowerCase().includes(searchLower)
+                );
+            }
+            
+            if (users.length === 0) {
+                container.innerHTML = '<p style="color: #aaa; text-align: center;">Пользователи не найдены</p>';
+                return;
+            }
+            
+            container.innerHTML = `
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Пользователь</th>
+                            <th>Email</th>
+                            <th>Регистрация</th>
+                            <th>Роль</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${users.map(user => `
+                            <tr data-id="${user.id}">
+                                <td>${user.id.substring(0, 6)}</td>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                        <div class="user-avatar">${user.username.substring(0, 2).toUpperCase()}</div>
+                                        <span>${user.username}</span>
+                                    </div>
+                                </td>
+                                <td>${user.email}</td>
+                                <td>${formatDate(user.createdAt)}</td>
+                                <td>
+                                    <span class="badge ${user.role === 'admin' ? 'badge-admin' : user.role === 'banned' ? 'badge-reject' : 'badge-user'}">
+                                        ${user.role === 'admin' ? 'Админ' : user.role === 'banned' ? 'Забанен' : 'Пользователь'}
+                                    </span>
+                                </td>
+                                <td>
+                                    <button class="admin-btn btn-process" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;">Редактировать</button>
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+        }
+
+        // Загрузка транзакций в админке
+        function loadAdminTransactions(typeFilter = 'all', dateFilter = '') {
+            const container = document.getElementById('admin-transactions-container');
+            container.innerHTML = '';
+            
+            let transactions = db.orders.map(order => {
+                const product = db.products.find(p => p.id === order.productId);
+                const buyer = db.users.find(u => u.id === order.buyerId);
+                const seller = db.users.find(u => u.id === order.sellerId);
+                
+                return {
+                    id: order.id,
+                    type: 'purchase',
+                    amount: order.price,
+                    buyer: buyer ? buyer.username : 'Неизвестный',
+                    seller: seller ? seller.username : 'Неизвестный',
+                    product: product ? product.name : 'Неизвестный товар',
+                    date: order.createdAt,
+                    status: order.status
+                };
+            });
+            
+            // Фильтрация по типу
+            if (typeFilter === 'purchase') {
+                transactions = transactions.filter(t => t.type === 'purchase');
+            } else if (typeFilter === 'payout') {
+                // В реальном приложении здесь будут выплаты продавцам
+                transactions = [];
+            } else if (typeFilter === 'refund') {
+                transactions = transactions.filter(t => t.status === 'cancelled');
+            }
+            
+            // Фильтрация по дате
+            if (dateFilter) {
+                const filterDate = new Date(dateFilter).toISOString().split('T')[0];
+                transactions = transactions.filter(t => t.date.split('T')[0] === filterDate);
+            }
+            
+            if (transactions.length === 0) {
+                container.innerHTML = '<p style="color: #aaa; text-align: center;">Транзакции не найдены</p>';
+                return;
+            }
+            
+            container.innerHTML = `
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Тип</th>
+                            <th>Сумма</th>
+                            <th>Покупатель</th>
+                            <th>Продавец</th>
+                            <th>Дата</th>
+                            <th>Статус</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${transactions.map(t => `
+                            <tr>
+                                <td>#${t.id.substring(0, 6)}</td>
+                                <td>${t.type === 'purchase' ? 'Покупка' : 'Возврат'}</td>
+                                <td style="color: ${t.status === 'cancelled' ? '#e74c3c' : '#2ecc71'};">$${t.amount.toFixed(2)}</td>
+                                <td>${t.buyer}</td>
+                                <td>${t.seller}</td>
+                                <td>${formatDate(t.date)}</td>
+                                <td>
+                                    <span class="badge ${getStatusClass(t.status)}">${getStatusText(t.status)}</span>
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+        }
+
+        // Загрузка настроек в админке
+        function loadAdminSettings() {
+            document.getElementById('commission-rate').value = db.settings.commission;
+            document.getElementById('min-payout').value = db.settings.minPayout;
+            document.getElementById('admin-email').value = db.settings.adminEmail;
+            document.getElementById('welcome-message').value = db.settings.welcomeMessage;
+        }
+
+        // Сохранение настроек
+        document.getElementById('save-settings-btn').addEventListener('click', function() {
+            db.settings.commission = parseInt(document.getElementById('commission-rate').value) || 5;
+            db.settings.minPayout = parseInt(document.getElementById('min-payout').value) || 10;
+            db.settings.adminEmail = document.getElementById('admin-email').value;
+            db.settings.welcomeMessage = document.getElementById('welcome-message').value;
+            
+            saveData();
+            alert('Настройки успешно сохранены!');
+        });
+
+        // Сброс настроек
+        document.getElementById('reset-settings-btn').addEventListener('click', function() {
+            if (confirm('Вы уверены, что хотите сбросить настройки к значениям по умолчанию?')) {
+                db.settings = {
+                    commission: 5,
+                    minPayout: 10,
+                    adminEmail: 'admin@gamehub.com',
+                    welcomeMessage: 'Добро пожаловать на GAMEHUB! Соблюдайте правила платформы и уважайте других пользователей.'
+                };
+                
+                saveData();
+                loadAdminSettings();
+                alert('Настройки сброшены к значениям по умолчанию!');
+            }
+        });
+
+        // Фильтрация тикетов
+        document.getElementById('tickets-filter').addEventListener('change', function() {
+            loadAdminTickets(this.value);
+        });
+
+        // Поиск пользователей
+        document.getElementById('users-search').addEventListener('input', function() {
+            loadAdminUsers(this.value);
+        });
+
+        // Фильтрация транзакций
+        document.getElementById('transactions-type-filter').addEventListener('change', function() {
+            const date = document.getElementById('transactions-date-filter').value;
+            loadAdminTransactions(this.value, date);
+        });
+        
+        document.getElementById('transactions-date-filter').addEventListener('change', function() {
+            const type = document.getElementById('transactions-type-filter').value;
+            loadAdminTransactions(type, this.value);
+        });
+
+        // Вспомогательные функции
+        function getStatusClass(status) {
+            switch (status) {
+                case 'new': return 'status-new';
+                case 'in_progress': return 'status-in-progress';
+                case 'resolved': return 'status-resolved';
+                case 'pending_payment': 
+                case 'paid':
+                case 'shipped': return 'status-pending';
+                case 'completed': return 'status-completed';
+                case 'cancelled': 
+                case 'dispute': return 'status-cancelled';
+                default: return '';
+            }
+        }
+
+        function getStatusText(status) {
+            switch (status) {
+                case 'new': return 'Новый';
+                case 'in_progress': return 'В работе';
+                case 'resolved': return 'Решен';
+                case 'pending_payment': return 'Ожидает оплаты';
+                case 'paid': return 'Оплачено';
+                case 'shipped': return 'Отправлено';
+                case 'completed': return 'Завершено';
+                case 'cancelled': return 'Отменено';
+                case 'dispute': return 'Спор';
+                default: return status;
+            }
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('ru-RU') + ' ' + date.toLocaleTimeString('ru-RU', {hour: '2-digit', minute:'2-digit'});
+        }
+    </script>
+</body>
+</html>
