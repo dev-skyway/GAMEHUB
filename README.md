@@ -1,2 +1,2 @@
-# GAMEHUB
-GAMEHUB - ТВОЙ ИГРОВОЙ РАЙ!
+# GAMEHUB > MARKETPLACE 
+GAMEHUB - ТВОЙ ИГРОВОЙ РАЙ!(в дальнейшем будет дорабатываться)
